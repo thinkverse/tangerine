@@ -4,9 +4,13 @@ use function Laravel\Folio\middleware;
 
 middleware(['auth']);
 
+?>
+
+@php
+
 $user = request()->user();
 
-?>
+@endphp
 
 <x-app-layout>
     <x-slot name="header">
