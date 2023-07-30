@@ -15,10 +15,12 @@ test('new users can register', function () {
     Event::fake();
 
     Volt::test('register')
-        ->set('form.name', 'Test User')
-        ->set('form.email', 'test@example.com')
-        ->set('form.password', 'password')
-        ->set('form.password_confirmation', 'password')
+        ->set('form', [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ])
         ->call('submit')
         ->assertRedirect(RouteServiceProvider::HOME);
 
