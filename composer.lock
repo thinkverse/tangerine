@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71511ce192e2c67e139a7af2ff5f40e6",
+    "content-hash": "919cd275eea909518a24de72088841c6",
     "packages": [
         {
             "name": "brick/math",
@@ -1904,6 +1904,78 @@
                 }
             ],
             "time": "2023-07-28T21:10:07+00:00"
+        },
+        {
+            "name": "livewire/volt",
+            "version": "v1.0.0-beta.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/livewire/volt.git",
+                "reference": "7679954f4d9f089ff30bb460feeb98c8f7b929cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/livewire/volt/zipball/7679954f4d9f089ff30bb460feeb98c8f7b929cd",
+                "reference": "7679954f4d9f089ff30bb460feeb98c8f7b929cd",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^10.16|^11.0",
+                "livewire/livewire": "^3.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "laravel/folio": "^1.0",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^8.5",
+                "pestphp/pest": "^2.9.5",
+                "phpstan/phpstan": "^1.10"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Livewire\\Volt\\VoltServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "functions.php"
+                ],
+                "psr-4": {
+                    "Livewire\\Volt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                },
+                {
+                    "name": "Nuno Maduro",
+                    "email": "nuno@laravel.com"
+                }
+            ],
+            "description": "An elegantly crafted functional API for Laravel Livewire.",
+            "homepage": "https://github.com/livewire/volt",
+            "keywords": [
+                "laravel",
+                "livewire",
+                "volt"
+            ],
+            "support": {
+                "issues": "https://github.com/livewire/volt/issues",
+                "source": "https://github.com/livewire/volt"
+            },
+            "time": "2023-07-26T16:39:41+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -9054,7 +9126,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "laravel/folio": 10,
-        "livewire/livewire": 10
+        "livewire/livewire": 10,
+        "livewire/volt": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,
