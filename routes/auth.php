@@ -11,16 +11,16 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::post('register', [RegisteredUserController::class, 'store'])
+    Route::post('register', RegisteredUserController::class)
                 ->name('register');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store'])
                 ->name('login');
 
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    Route::post('forgot-password', PasswordResetLinkController::class)
                 ->name('password.request');
 
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
+    Route::post('reset-password', NewPasswordController::class)
                 ->name('password.store');
 });
 
@@ -29,14 +29,14 @@ Route::middleware('auth')->group(function () {
                 ->middleware(['signed', 'throttle:6,1'])
                 ->name('verification.verify');
 
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+    Route::post('email/verification-notification', EmailVerificationNotificationController::class)
                 ->middleware('throttle:6,1')
                 ->name('verification.send');
 
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store'])
+    Route::post('confirm-password', ConfirmablePasswordController::class)
                 ->name('password.confirm');
 
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::put('password', PasswordController::class)->name('password.update');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
