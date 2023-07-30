@@ -1,3 +1,11 @@
+<?php
+
+use function Laravel\Folio\middleware;
+
+middleware(['guest']);
+
+?>
+
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
