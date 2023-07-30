@@ -1,6 +1,8 @@
 <?php
 
 use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Event;
 use Livewire\Volt\Volt;
 
 test('registration screen can be rendered', function () {
@@ -10,6 +12,8 @@ test('registration screen can be rendered', function () {
 });
 
 test('new users can register', function () {
+    Event::fake();
+
     Volt::test('register')
         ->set('form.name', 'Test User')
         ->set('form.email', 'test@example.com')
@@ -17,6 +21,8 @@ test('new users can register', function () {
         ->set('form.password_confirmation', 'password')
         ->call('submit')
         ->assertRedirect(RouteServiceProvider::HOME);
+
+    Event::assertDispatched(Registered::class);
 
     $this->assertAuthenticated();
 });
