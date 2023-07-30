@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
+use Livewire\Volt\Volt;
 
 test('reset password link screen can be rendered', function () {
     $response = $this->get('/forgot-password');
@@ -15,7 +16,10 @@ test('reset password link can be requested', function () {
 
     $user = User::factory()->create();
 
-    $this->post('/forgot-password', ['email' => $user->email]);
+    Volt::test('forgot-password')
+        ->set('form.email', $user->email)
+        ->call('submit')
+        ->assertHasNoErrors();
 
     Notification::assertSentTo($user, ResetPassword::class);
 });
@@ -25,7 +29,10 @@ test('reset password screen can be rendered', function () {
 
     $user = User::factory()->create();
 
-    $this->post('/forgot-password', ['email' => $user->email]);
+    Volt::test('forgot-password')
+        ->set('form.email', $user->email)
+        ->call('submit')
+        ->assertHasNoErrors();
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
         $response = $this->get('/reset-password/'.$notification->token);
@@ -41,7 +48,10 @@ test('password can be reset with valid token', function () {
 
     $user = User::factory()->create();
 
-    $this->post('/forgot-password', ['email' => $user->email]);
+    Volt::test('forgot-password')
+        ->set('form.email', $user->email)
+        ->call('submit')
+        ->assertHasNoErrors();
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
         $response = $this->post('/reset-password', [
