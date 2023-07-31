@@ -4,7 +4,6 @@ namespace App\Livewire\Forms;
 
 use Livewire\Form;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Livewire\Attributes\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
@@ -20,13 +19,6 @@ class AuthenticatedSessionForm extends Form
 
     #[Rule(['boolean'])]
     public bool $remember = false;
-
-    protected $request;
-
-    public function setRequest(Request $request): void
-    {
-        $this->request = $request;
-    }
 
     public function authenticate()
     {
@@ -49,13 +41,13 @@ class AuthenticatedSessionForm extends Form
 
         RateLimiter::clear($this->throttleKey());
 
-        $this->request->session()->regenerate();
+        request()->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.$this->request->ip());
+        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
     }
 }

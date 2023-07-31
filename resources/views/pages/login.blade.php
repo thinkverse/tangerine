@@ -1,22 +1,15 @@
 <?php
 
 use App\Livewire\Forms\AuthenticatedSessionForm;
-use App\Providers\RouteServiceProvider;
 
-use function Livewire\Volt\{form, protect};
+use function Livewire\Volt\form;
 use function Laravel\Folio\middleware;
 
 middleware(['guest']);
 
 form(AuthenticatedSessionForm::class);
 
-$submit = function () {
-    $this->setRequest();
-
-    $this->form->authenticate();
-};
-
-$setRequest = protect(fn () => $this->form->setRequest(request()));
+$submit = fn() => $this->form->authenticate();
 
 ?>
 
