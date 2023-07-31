@@ -1,7 +1,6 @@
 <?php
 
 use App\Livewire\Forms\UpdatePasswordForm;
-use Illuminate\Support\Facades\Hash;
 
 use function Livewire\Volt\form;
 
