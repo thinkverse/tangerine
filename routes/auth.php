@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\DestroyAuthenticatedSessionController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
@@ -19,9 +18,6 @@ Route::middleware('auth')->group(function () {
     Route::post('email/verification-notification', EmailVerificationNotificationController::class)
                 ->middleware('throttle:6,1')
                 ->name('verification.send');
-
-    Route::post('confirm-password', ConfirmablePasswordController::class)
-                ->name('password.confirm');
 
     Route::post('logout', DestroyAuthenticatedSessionController::class)
                 ->name('logout');
