@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\DestroyAuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
@@ -23,6 +23,6 @@ Route::middleware('auth')->group(function () {
     Route::post('confirm-password', ConfirmablePasswordController::class)
                 ->name('password.confirm');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    Route::post('logout', DestroyAuthenticatedSessionController::class)
                 ->name('logout');
 });
