@@ -9,9 +9,7 @@
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
+    <livewire:email-verification-notification />
 
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
         @csrf
@@ -33,16 +31,14 @@
                     <p class="mt-2 text-sm text-gray-800 ">
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button form="send-email-verification" class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
 
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 text-sm font-medium text-green-600 ">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
+                    <div x-data="{ show: false }" x-on:email-verification-link-sent.window="show = !show" class="mt-2 text-sm font-medium text-green-600">
+                        <p x-show="show">{{ __('A new verification link has been sent to your email address.') }}</p>
+                    </div>
                 </div>
             @endif
         </div>
