@@ -1,8 +1,22 @@
 <?php
 
+use App\Livewire\Forms\AuthenticatedSessionForm;
+use App\Providers\RouteServiceProvider;
+
+use function Livewire\Volt\{form, protect};
 use function Laravel\Folio\middleware;
 
 middleware(['guest']);
+
+form(AuthenticatedSessionForm::class);
+
+$submit = function () {
+    $this->setRequest();
+
+    $this->form->authenticate();
+};
+
+$setRequest = protect(fn () => $this->form->setRequest(request()));
 
 ?>
 
@@ -10,14 +24,13 @@ middleware(['guest']);
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
+    @volt
+    <form wire:submit="submit">
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-text-input id="email" class="block w-full mt-1" type="email" name="email" wire:model="form.email" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
         </div>
 
         <!-- Password -->
@@ -27,15 +40,16 @@ middleware(['guest']);
             <x-text-input id="password" class="block w-full mt-1"
                             type="password"
                             name="password"
+                            wire:model="form.password"
                             required autocomplete="current-password" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
         </div>
 
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="text-indigo-600 border-gray-300 rounded shadow-sm focus:ring-indigo-500" name="remember">
+                <input id="remember_me" type="checkbox"  wire:model="form.remember" class="text-indigo-600 border-gray-300 rounded shadow-sm focus:ring-indigo-500" name="remember">
                 <span class="ml-2 text-sm text-gray-600 ">{{ __('Remember me') }}</span>
             </label>
         </div>
@@ -50,4 +64,5 @@ middleware(['guest']);
             </x-primary-button>
         </div>
     </form>
+    @endvolt
 </x-guest-layout>
