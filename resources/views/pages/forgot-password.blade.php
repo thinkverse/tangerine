@@ -9,9 +9,7 @@ middleware(['guest']);
 
 form(ForgotPasswordForm::class);
 
-$submit = function () {
-    $this->form->save();
-}
+$submit = fn() => $this->form->save();
 
 ?>
 

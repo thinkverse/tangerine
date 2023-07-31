@@ -9,9 +9,7 @@ middleware(['guest']);
 
 form(RegisteredUserForm::class);
 
-$submit = function () {
-    $this->form->save();
-}
+$submit = fn() => $this->form->save();
 
 ?>
 
