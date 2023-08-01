@@ -18,7 +18,7 @@ $submit = function() {
         return $this->addError('password', __('auth.password'));
     }
 
-    request()->session()->put('auth.password_confirmed_at', time());
+    session()->put('auth.password_confirmed_at', time());
 
     return redirect()->intended(RouteServiceProvider::HOME);
 };

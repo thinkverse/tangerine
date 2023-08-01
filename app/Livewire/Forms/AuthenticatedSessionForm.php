@@ -41,7 +41,7 @@ class AuthenticatedSessionForm extends Form
 
         RateLimiter::clear($this->throttleKey());
 
-        request()->session()->regenerate();
+        session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
