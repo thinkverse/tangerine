@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Livewire\Volt\Volt;
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
@@ -53,14 +54,12 @@ test('email verification status is unchanged when the email address is unchanged
 test('user can delete their account', function () {
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
-        ->delete('/profile', [
-            'password' => 'password',
-        ]);
+    $this->actingAs($user);
 
-    $response
-        ->assertSessionHasNoErrors()
+    Volt::test('delete-account')
+        ->set('password', 'password')
+        ->call('delete')
+        ->assertHasNoErrors()
         ->assertRedirect('/');
 
     $this->assertGuest();
@@ -70,16 +69,14 @@ test('user can delete their account', function () {
 test('correct password must be provided to delete account', function () {
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
-        ->from('/profile')
-        ->delete('/profile', [
-            'password' => 'wrong-password',
-        ]);
+    $this->actingAs($user);
 
-    $response
-        ->assertSessionHasErrorsIn('userDeletion', 'password')
-        ->assertRedirect('/profile');
+    Volt::test('delete-account')
+        ->set('password', 'wrong-password')
+        ->call('delete')
+        ->assertHasErrors('password')
+        ->assertSee('The password is incorrect.');
 
+    $this->assertAuthenticated();
     $this->assertNotNull($user->fresh());
 });

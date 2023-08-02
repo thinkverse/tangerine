@@ -35,7 +35,7 @@ $user = request()->user();
 
             <div class="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
                 <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
+                    <livewire:delete-account />
                 </div>
             </div>
         </div>
