@@ -17,19 +17,19 @@ middleware(['auth']);
         <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
             <div class="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
                 <div class="max-w-xl">
-                    <livewire:update-profile-information />
+                    <livewire:profile.update-information />
                 </div>
             </div>
 
             <div class="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
                 <div class="max-w-xl">
-                    <livewire:update-password />
+                    <livewire:profile.update-password />
                 </div>
             </div>
 
             <div class="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
                 <div class="max-w-xl">
-                    <livewire:delete-account />
+                    <livewire:profile.delete-account />
                 </div>
             </div>
         </div>

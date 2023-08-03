@@ -18,7 +18,7 @@ test('profile information can be updated', function () {
 
     $this->actingAs($user);
 
-    Volt::test('update-profile-information')
+    Volt::test('profile.update-information')
         ->set([
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -39,7 +39,7 @@ test('email verification status is unchanged when the email address is unchanged
 
     $this->actingAs($user);
 
-    Volt::test('update-profile-information')
+    Volt::test('profile.update-information')
         ->set([
             'name' => 'Test User',
             'email' => $user->email,
@@ -56,7 +56,7 @@ test('user can delete their account', function () {
 
     $this->actingAs($user);
 
-    Volt::test('delete-account')
+    Volt::test('profile.delete-account')
         ->set('password', 'password')
         ->call('delete')
         ->assertHasNoErrors()
@@ -71,7 +71,7 @@ test('correct password must be provided to delete account', function () {
 
     $this->actingAs($user);
 
-    Volt::test('delete-account')
+    Volt::test('profile.delete-account')
         ->set('password', 'wrong-password')
         ->call('delete')
         ->assertHasErrors('password')
