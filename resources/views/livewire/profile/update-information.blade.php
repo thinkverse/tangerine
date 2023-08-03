@@ -5,11 +5,11 @@ use Illuminate\Validation\Rule;
 
 use function Livewire\Volt\{state, rules, mount};
 
-state(['user' => auth()->user(), 'name' => '', 'email' => '']);
+state(['user' => Auth::user(), 'name' => '', 'email' => '']);
 
 rules([
     'name' => ['string', 'max:255'],
-    'email' => ['email', 'max:255', Rule::unique('users')->ignore(auth()->user()->id)],
+    'email' => ['email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)],
 ]);
 
 mount(function () {

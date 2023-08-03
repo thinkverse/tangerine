@@ -27,13 +27,12 @@ class RegisteredUserForm extends Form
 
     public function save(): Redirector
     {
-        $validated = $this->validate();
+        $this->validate();
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-        ]);
+        $user = User::create(array_merge(
+            $this->only(['name', 'email']),
+            ['password' => Hash::make($this->password)]
+        ));
 
         event(new Registered($user));
 

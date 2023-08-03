@@ -33,7 +33,7 @@ class AuthenticatedSessionForm extends Form
             ]));
         }
 
-        if (!Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        if (!Auth::attempt($this->only(['email', 'password']), $this->remember)) {
             RateLimiter::hit($this->throttleKey());
 
             return $this->addError('email', __('auth.failed'));

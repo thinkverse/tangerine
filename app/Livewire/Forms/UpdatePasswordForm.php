@@ -20,10 +20,10 @@ class UpdatePasswordForm extends Form
 
     public function save(): Redirector
     {
-        $validated = $this->validate();
+        $this->validate();
 
         request()->user()->update([
-            'password' => Hash::make($validated['password']),
+            'password' => Hash::make($this->password),
         ]);
 
         return redirect('/profile')

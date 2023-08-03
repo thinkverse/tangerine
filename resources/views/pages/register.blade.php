@@ -16,8 +16,6 @@ $submit = fn() => $this->form->save();
 <x-guest-layout>
     @volt
     <form wire:submit="submit">
-        @csrf
-
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />

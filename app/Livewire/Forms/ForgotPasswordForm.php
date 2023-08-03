@@ -13,10 +13,8 @@ class ForgotPasswordForm extends Form
 
     public function save()
     {
-        $validated = $this->validate();
-
         $status = Password::sendResetLink(
-            $validated,
+            $this->validate(),
         );
 
         return $status === Password::RESET_LINK_SENT

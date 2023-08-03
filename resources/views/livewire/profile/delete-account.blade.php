@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 use function Livewire\Volt\{state, rules};
 
 rules(['password' => 'required|current_password']);
@@ -10,7 +12,7 @@ $delete = function() {
 
     $user = request()->user();
 
-    auth()->logout();
+    Auth::logout();
 
     $user->delete();
 
