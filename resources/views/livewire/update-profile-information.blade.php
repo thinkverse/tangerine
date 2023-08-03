@@ -69,7 +69,7 @@ $update = function () {
                     </p>
 
                     <div x-data="{ show: false }" x-on:email-verification-link-sent.window="show = !show" class="mt-2 text-sm font-medium text-green-600">
-                        <p x-show="show">{{ __('A new verification link has been sent to your email address.') }}</p>
+                        <p x-cloak x-show="show">{{ __('A new verification link has been sent to your email address.') }}</p>
                     </div>
                 </div>
             @endif
