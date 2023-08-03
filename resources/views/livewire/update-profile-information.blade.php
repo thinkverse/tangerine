@@ -1,3 +1,38 @@
+<?php
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+
+use function Livewire\Volt\{state, rules, mount};
+
+state(['user' => auth()->user(), 'name' => '', 'email' => '']);
+
+rules([
+    'name' => ['string', 'max:255'],
+    'email' => ['email', 'max:255', Rule::unique('users')->ignore(auth()->user()->id)],
+]);
+
+mount(function () {
+    $this->email = $this->user->email;
+    $this->name = $this->user->name;
+});
+
+$update = function () {
+    $this->validate();
+
+    request()->user()->fill($this->all());
+
+    if (request()->user()->isDirty('email')) {
+        request()->user()->email_verified_at = null;
+    }
+
+    request()->user()->save();
+
+    return redirect('/profile')->with('status', 'profile-updated');
+};
+
+?>
+
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -11,19 +46,16 @@
 
     <livewire:email-verification-notification />
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
-        @csrf
-        @method('patch')
-
+    <form wire:submit="update" class="mt-6 space-y-6">
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="block w-full mt-1" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-text-input id="name" name="name" type="text" class="block w-full mt-1" wire:model="name" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="block w-full mt-1" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="user.email" type="email" class="block w-full mt-1" wire:model="email" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
