@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Livewire\Volt\Volt;
 
 test('confirm password screen can be rendered', function () {
     $user = User::factory()->create();
@@ -13,20 +14,23 @@ test('confirm password screen can be rendered', function () {
 test('password can be confirmed', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/confirm-password', [
-        'password' => 'password',
-    ]);
+    $this->actingAs($user);
 
-    $response->assertRedirect();
-    $response->assertSessionHasNoErrors();
+    Volt::test('confirm-password')
+        ->set('password', 'password')
+        ->call('submit')
+        ->assertRedirect()
+        ->assertHasNoErrors()
+        ->assertSessionHas('auth.password_confirmed_at');
 });
 
 test('password is not confirmed with invalid password', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/confirm-password', [
-        'password' => 'wrong-password',
-    ]);
+    $this->actingAs($user);
 
-    $response->assertSessionHasErrors();
+    Volt::test('confirm-password')
+        ->set('password', 'wrong-password')
+        ->call('submit')
+        ->assertHasErrors('password');
 });

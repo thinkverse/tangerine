@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Livewire\Volt\Volt;
 use App\Providers\RouteServiceProvider;
 
 test('login screen can be rendered', function () {
@@ -12,22 +13,27 @@ test('login screen can be rendered', function () {
 test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
-    $response = $this->post('/login', [
-        'email' => $user->email,
-        'password' => 'password',
-    ]);
+    Volt::test('login')
+        ->set('form', [
+            'email' => $user->email,
+            'password' => 'password',
+        ])
+        ->call('submit')
+        ->assertRedirect(RouteServiceProvider::HOME);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(RouteServiceProvider::HOME);
 });
 
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $this->post('/login', [
-        'email' => $user->email,
-        'password' => 'wrong-password',
-    ]);
+    Volt::test('login')
+        ->set('form', [
+            'email' => $user->email,
+            'password' => 'wrong-password',
+        ])
+        ->call('submit')
+        ->assertHasErrors('form.email');
 
     $this->assertGuest();
 });

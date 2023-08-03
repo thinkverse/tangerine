@@ -74,7 +74,9 @@ test('correct password must be provided to delete account', function () {
     Volt::test('profile.delete-account')
         ->set('password', 'wrong-password')
         ->call('delete')
-        ->assertHasErrors('password')
+        ->assertHasErrors([
+            'password' => ['current_password'],
+        ])
         ->assertSee('The password is incorrect.');
 
     $this->assertAuthenticated();
