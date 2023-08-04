@@ -4,11 +4,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Volt\Volt;
 
+beforeEach(function () {
+    $this->user = User::factory()->create();
+
+    $this->actingAs($this->user);
+});
+
 test('password can be updated', function () {
-    $user = User::factory()->create();
-
-    $this->actingAs($user);
-
     Volt::test('profile.update-password')
         ->set('form', [
             'current_password' => 'password',
@@ -19,14 +21,10 @@ test('password can be updated', function () {
         ->assertHasNoErrors()
         ->assertRedirect('/profile');
 
-    $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
+    $this->assertTrue(Hash::check('new-password', $this->user->refresh()->password));
 });
 
 test('correct password must be provided to update password', function () {
-    $user = User::factory()->create();
-
-    $this->actingAs($user);
-
     Volt::test('profile.update-password')
         ->set('form', [
             'current_password' => 'wrong-password',
