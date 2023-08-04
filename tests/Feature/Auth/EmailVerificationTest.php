@@ -1,19 +1,28 @@
 <?php
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use Livewire\Volt\FragmentAlias;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\URL;
+use App\Providers\RouteServiceProvider;
 
 test('email verification screen can be rendered', function () {
     $user = User::factory()->create([
         'email_verified_at' => null,
     ]);
 
-    $response = $this->actingAs($user)->get('/verify-email');
-
-    $response->assertStatus(200);
+    $this->actingAs($user)
+        ->get('/verify-email')
+        ->assertOk()
+        ->assertSeeLivewire(
+            FragmentAlias::encode(
+                componentName: 'send-email.form',
+                path: resource_path(
+                    path: 'views/livewire/email-verification-notification.blade.php'
+                ),
+            )
+        );
 });
 
 test('email can be verified', function () {

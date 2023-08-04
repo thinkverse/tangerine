@@ -46,6 +46,7 @@ $update = function () {
 
     <livewire:email-verification-notification />
 
+    @volt('profile.update-information')
     <form wire:submit="update" class="mt-6 space-y-6">
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -89,4 +90,5 @@ $update = function () {
             @endif
         </div>
     </form>
+    @endvolt
 </section>

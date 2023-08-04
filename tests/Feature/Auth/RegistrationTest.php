@@ -1,14 +1,22 @@
 <?php
 
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Event;
 use Livewire\Volt\Volt;
+use Livewire\Volt\FragmentAlias;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 test('registration screen can be rendered', function () {
-    $response = $this->get('/register');
-
-    $response->assertStatus(200);
+    $this->get('/register')
+        ->assertOk()
+        ->assertSeeLivewire(
+            FragmentAlias::encode(
+                componentName: 'register.form',
+                path: resource_path(
+                    path: 'views/pages/register.blade.php'
+                ),
+            )
+        );
 });
 
 test('new users can register', function () {

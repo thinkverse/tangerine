@@ -14,7 +14,7 @@ $submit = fn() => $this->form->save();
 ?>
 
 <x-guest-layout>
-    @volt
+    @volt('register.form')
     <form wire:submit="submit">
         <!-- Name -->
         <div>

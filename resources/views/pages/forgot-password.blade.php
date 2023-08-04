@@ -21,7 +21,7 @@ $submit = fn() => $this->form->save();
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    @volt
+    @volt('forgot-password.form')
     <form wire:submit="submit">
         <!-- Email Address -->
         <div>

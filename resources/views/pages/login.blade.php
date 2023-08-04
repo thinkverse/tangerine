@@ -17,7 +17,7 @@ $submit = fn() => $this->form->authenticate();
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    @volt
+    @volt('login.form')
     <form wire:submit="submit">
         <!-- Email Address -->
         <div>

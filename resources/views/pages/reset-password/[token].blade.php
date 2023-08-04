@@ -53,7 +53,7 @@ $submit = function () {
 ?>
 
 <x-guest-layout>
-    @volt
+    @volt('reset-password.form')
     <form wire:submit="submit">
         <!-- Password Reset Token -->
         <input type="hidden" name="token" wire:model="token">

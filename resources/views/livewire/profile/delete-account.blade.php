@@ -41,6 +41,7 @@ $delete = function() {
     >{{ __('Delete Account') }}</x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
+        @volt('profile.delete-account')
         <form wire:submit="delete" class="p-6">
             <h2 class="text-lg font-medium text-gray-900">
                 {{ __('Are you sure you want to delete your account?') }}
@@ -75,5 +76,6 @@ $delete = function() {
                 </x-danger-button>
             </div>
         </form>
+        @endvolt
     </x-modal>
 </section>

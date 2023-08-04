@@ -21,6 +21,7 @@ $update = fn() => $this->form->save();
         </p>
     </header>
 
+    @volt('profile.update-password')
     <form wire:submit="update" class="mt-6 space-y-6">
         <div>
             <x-input-label for="current_password" :value="__('Current Password')" />
@@ -54,4 +55,5 @@ $update = fn() => $this->form->save();
             @endif
         </div>
     </form>
+    @endvolt
 </section>

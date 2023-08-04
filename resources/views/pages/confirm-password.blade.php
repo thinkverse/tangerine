@@ -30,7 +30,7 @@ $submit = function() {
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
 
-    @volt
+    @volt('confirm-password.form')
     <form wire:submit="submit">
         <!-- Password -->
         <div>

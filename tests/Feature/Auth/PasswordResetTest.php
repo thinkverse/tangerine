@@ -1,12 +1,23 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Support\Facades\Notification;
 use Livewire\Volt\Volt;
+use Livewire\Volt\FragmentAlias;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 test('reset password link screen can be rendered', function () {
-    $this->get('/forgot-password')->assertStatus(200);
+    $this->assertGuest()
+        ->get('/forgot-password')
+        ->assertOk()
+        ->assertSeeLivewire(
+            FragmentAlias::encode(
+                componentName: 'forgot-password.form',
+                path: resource_path(
+                    path: 'views/pages/forgot-password.blade.php'
+                ),
+            )
+        );
 });
 
 test('reset password link can be requested', function () {
@@ -33,7 +44,20 @@ test('reset password screen can be rendered', function () {
         ->assertHasNoErrors();
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
-        $this->get('/reset-password/'.$notification->token)->assertStatus(200);
+        $this->assertGuest()
+            ->get(url(
+                path: '/reset-password/',
+                parameters: ['token' => $notification->token]
+            ))
+            ->assertOk()
+            ->assertSeeLivewire(
+                FragmentAlias::encode(
+                    componentName: 'reset-password.form',
+                    path: resource_path(
+                        path: 'views/pages/reset-password/[token].blade.php'
+                    ),
+                )
+            );
 
         return true;
     });
@@ -52,7 +76,7 @@ test('password can be reset with valid token', function () {
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
         Volt::test('reset-password/[token]', [
             'token' => $notification->token
-            ])
+        ])
             ->set([
                 'email' => $user->email,
                 'password' => 'password',

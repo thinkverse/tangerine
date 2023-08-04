@@ -14,4 +14,6 @@ $submit = function () {
 
 ?>
 
+@volt('send-email.form')
 <form wire:submit="submit" id="send-email-verification"></form>
+@endvolt

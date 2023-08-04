@@ -2,12 +2,21 @@
 
 use App\Models\User;
 use Livewire\Volt\Volt;
+use Livewire\Volt\FragmentAlias;
 use App\Providers\RouteServiceProvider;
 
 test('login screen can be rendered', function () {
-    $response = $this->get('/login');
-
-    $response->assertStatus(200);
+    $this->assertGuest()
+        ->get('/login')
+        ->assertOk()
+        ->assertSeeLivewire(
+            FragmentAlias::encode(
+                componentName: 'login.form',
+                path: resource_path(
+                    path: 'views/pages/login.blade.php'
+                ),
+            )
+        );
 });
 
 test('users can authenticate using the login screen', function () {

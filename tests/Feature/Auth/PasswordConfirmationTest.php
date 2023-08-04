@@ -2,20 +2,28 @@
 
 use App\Models\User;
 use Livewire\Volt\Volt;
+use Livewire\Volt\FragmentAlias;
+
+beforeEach(function () {
+    $this->user = User::factory()->create();
+
+    $this->actingAs($this->user);
+});
 
 test('confirm password screen can be rendered', function () {
-    $user = User::factory()->create();
-
-    $response = $this->actingAs($user)->get('/confirm-password');
-
-    $response->assertStatus(200);
+    $this->get('/confirm-password')
+        ->assertOk()
+        ->assertSeeLivewire(
+            FragmentAlias::encode(
+                componentName: 'confirm-password.form',
+                path: resource_path(
+                    path: 'views/pages/confirm-password.blade.php'
+                ),
+            )
+        );
 });
 
 test('password can be confirmed', function () {
-    $user = User::factory()->create();
-
-    $this->actingAs($user);
-
     Volt::test('confirm-password')
         ->set('password', 'password')
         ->call('submit')
@@ -25,10 +33,6 @@ test('password can be confirmed', function () {
 });
 
 test('password is not confirmed with invalid password', function () {
-    $user = User::factory()->create();
-
-    $this->actingAs($user);
-
     Volt::test('confirm-password')
         ->set('password', 'wrong-password')
         ->call('submit')
