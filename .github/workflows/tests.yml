@@ -54,7 +54,10 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+        run: composer install --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+      - name: Clear Config
+        run: php artisan config:clear
 
       - name: Execute tests
         run: php artisan test --env=testing --profile
