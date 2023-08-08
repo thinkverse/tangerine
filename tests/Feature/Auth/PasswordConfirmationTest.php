@@ -2,7 +2,6 @@
 
 use App\Models\User;
 use Livewire\Volt\Volt;
-use Livewire\Volt\FragmentAlias;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
@@ -13,14 +12,7 @@ beforeEach(function () {
 test('confirm password screen can be rendered', function () {
     $this->get('/confirm-password')
         ->assertOk()
-        ->assertSeeLivewire(
-            FragmentAlias::encode(
-                componentName: 'confirm-password.form',
-                path: resource_path(
-                    path: 'views/pages/confirm-password.blade.php'
-                ),
-            )
-        );
+        ->assertSeeVolt('confirm-password.form');
 });
 
 test('password can be confirmed', function () {

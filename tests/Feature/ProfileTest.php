@@ -2,7 +2,6 @@
 
 use App\Models\User;
 use Livewire\Volt\Volt;
-use Livewire\Volt\FragmentAlias;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
@@ -13,30 +12,9 @@ beforeEach(function () {
 test('profile page is displayed', function () {
     $this->get('/profile')
         ->assertOk()
-        ->assertSeeLivewire(
-            FragmentAlias::encode(
-                componentName: 'profile.update-information',
-                path: resource_path(
-                    path: 'views/livewire/profile/update-information.blade.php'
-                ),
-            )
-        )
-        ->assertSeeLivewire(
-            FragmentAlias::encode(
-                componentName: 'profile.update-password',
-                path: resource_path(
-                    path: 'views/livewire/profile/update-password.blade.php'
-                ),
-            )
-        )
-        ->assertSeeLivewire(
-            FragmentAlias::encode(
-                componentName: 'profile.delete-account',
-                path: resource_path(
-                    path: 'views/livewire/profile/delete-account.blade.php'
-                ),
-            )
-        );
+        ->assertSeeVolt('profile.update-information')
+        ->assertSeeVolt('profile.update-password')
+        ->assertSeeVolt('profile.delete-account');
 });
 
 test('profile information can be updated', function () {

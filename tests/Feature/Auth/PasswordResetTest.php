@@ -2,7 +2,6 @@
 
 use App\Models\User;
 use Livewire\Volt\Volt;
-use Livewire\Volt\FragmentAlias;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\ResetPassword;
 
@@ -10,14 +9,7 @@ test('reset password link screen can be rendered', function () {
     $this->assertGuest()
         ->get('/forgot-password')
         ->assertOk()
-        ->assertSeeLivewire(
-            FragmentAlias::encode(
-                componentName: 'forgot-password.form',
-                path: resource_path(
-                    path: 'views/pages/forgot-password.blade.php'
-                ),
-            )
-        );
+        ->assertSeeVolt('forgot-password.form');
 });
 
 test('reset password link can be requested', function () {
@@ -50,14 +42,7 @@ test('reset password screen can be rendered', function () {
                 parameters: ['token' => $notification->token]
             ))
             ->assertOk()
-            ->assertSeeLivewire(
-                FragmentAlias::encode(
-                    componentName: 'reset-password.form',
-                    path: resource_path(
-                        path: 'views/pages/reset-password/[token].blade.php'
-                    ),
-                )
-            );
+            ->assertSeeVolt('reset-password.form');
 
         return true;
     });
