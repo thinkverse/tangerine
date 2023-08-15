@@ -1,8 +1,10 @@
 <?php
 
+use function Livewire\Volt\action;
+
 use App\Providers\RouteServiceProvider;
 
-$submit = function () {
+$submit = action(function () {
     if (request()->user()->hasVerifiedEmail()) {
         return redirect()->intended(RouteServiceProvider::HOME);
     }
@@ -10,10 +12,8 @@ $submit = function () {
     request()->user()->sendEmailVerificationNotification();
 
     $this->dispatch('email-verification-link-sent');
-};
+})->renderless();
 
 ?>
 
-@volt('send-email.form')
 <form wire:submit="submit" id="send-email-verification"></form>
-@endvolt

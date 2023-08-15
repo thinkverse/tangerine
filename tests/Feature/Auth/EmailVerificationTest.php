@@ -17,7 +17,7 @@ beforeEach(function () {
 test('email verification screen can be rendered', function () {
     $this->get('/verify-email')
         ->assertOk()
-        ->assertSeeVolt('send-email.form');
+        ->assertSeeLivewire('email-verification-notification');
 });
 
 test('email can be verified', function () {
