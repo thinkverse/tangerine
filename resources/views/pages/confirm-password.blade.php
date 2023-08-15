@@ -3,10 +3,12 @@
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
+use function Laravel\Folio\{middleware, name};
 use function Livewire\Volt\state;
-use function Laravel\Folio\middleware;
 
 middleware(['auth']);
+
+name('password.confirm');
 
 state(['password' => '']);
 
