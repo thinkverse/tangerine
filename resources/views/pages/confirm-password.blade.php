@@ -10,7 +10,9 @@ middleware(['auth']);
 
 name('password.confirm');
 
-state(['password' => '']);
+state(
+    password: ''
+);
 
 $submit = function() {
     if (! Auth::guard('web')->validate([

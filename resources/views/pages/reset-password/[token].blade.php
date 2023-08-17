@@ -9,15 +9,22 @@ use Illuminate\Validation\Rules;
 use function Livewire\Volt\{state, rules};
 use function Laravel\Folio\middleware;
 
-state(['token' => fn () => $token, 'password' => '', 'password_confirmation' => '']);
-state(['email'])->url();
+state(
+    email: '',
+)->url();
 
-rules([
-    'token' => ['required'],
-    'email' => ['required', 'email'],
-    'password' => ['required', 'confirmed', Rules\Password::defaults()],
-    'password_confirmation' => ['required'],
-]);
+state(
+    token: fn () => $token,
+    password: '',
+    password_confirmation: '',
+);
+
+rules(
+    token: ['required'],
+    email: ['required', 'email'],
+    password: ['required', 'confirmed', Rules\Password::defaults()],
+    password_confirmation: ['required'],
+);
 
 middleware(['guest']);
 

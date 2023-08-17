@@ -4,8 +4,13 @@ use Illuminate\Support\Facades\Auth;
 
 use function Livewire\Volt\{state, rules};
 
-rules(['password' => 'required|current_password']);
-state(['password' => '']);
+state(
+    password: '',
+);
+
+rules(
+    password: ['required', 'current_password'],
+);
 
 $delete = function() {
     $this->validate();
